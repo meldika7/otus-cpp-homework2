@@ -3,6 +3,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <algorithm>
 
 // ("",  '.') -> [""]
 // ("11", '.') -> ["11"]
@@ -85,8 +86,50 @@ int main(int argc, char const *argv[])
         // 1.29.168.152
         // 1.1.234.8
 
+		auto filter = [&ip_pool](int first, int second = -1) -> void //decltype(ip_pool)
+		{
+			// std::vector<std::vector<std::string> > res;
+			// decltype(ip_pool) res;
+			for(auto ip = ip_pool.cbegin(); ip != ip_pool.cend(); ++ip)
+			{
+				bool goodChoice = true;
+				for(auto ip_part = ip->cbegin(); ip_part != ip->cend(); ++ip_part)
+				{
+					if (ip_part == ip->cbegin() && std::atoi((*ip_part).c_str()) != first)
+					{
+						goodChoice = false;
+						break;
+					}
+					if (ip_part == (ip->cbegin() + 1)) 
+					{
+						if (second == -1)
+							break;
+						if (std::atoi((*(ip_part + 1)).c_str()) == second)
+						{
+							goodChoice = false;
+							break;
+						}
+					}
+				}
+				if (goodChoice)
+				{
+					for(auto ip_part = ip->cbegin(); ip_part != ip->cend(); ++ip_part)
+					{
+						if (ip_part != ip->cbegin())
+						{
+							std::cout << ".";
+						}
+						std::cout << *ip_part;
+					}					
+				
+					std::cout << std::endl;					
+				}                        
+			}
+		};
+
         // TODO filter by first byte and output
-        // ip = filter(1)
+        // auto ip = 
+		filter(1);
 
         // 1.231.69.33
         // 1.87.203.225
