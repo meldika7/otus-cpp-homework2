@@ -148,15 +148,39 @@ int main(int argc, char const *argv[])
         // 1.1.234.8
 
         // TODO filter by first and second bytes and output
-        // ip = filter(46, 70)
+        ip = filter(46, 70);
+		printIpPool(ip);
 
         // 46.70.225.39
         // 46.70.147.26
         // 46.70.113.73
         // 46.70.29.76
 
+		auto filter_any = [&ip_pool](int byteValue) -> decltype(ip_pool)
+		{
+			decltype(ip_pool) res;
+			for(auto ip = ip_pool.cbegin(); ip != ip_pool.cend(); ++ip)
+			{
+				bool goodChoice = false;
+				for(auto ip_part = ip->cbegin(); ip_part != ip->cend(); ++ip_part)
+				{
+					if (std::atoi((*ip_part).c_str()) == byteValue)
+					{
+						goodChoice = true;
+						break;
+					}					
+				}
+				if (goodChoice)
+				{
+					res.push_back(*ip);				
+				}
+			}		
+			return res;                        
+	
+		};
         // TODO filter by any byte and output
-        // ip = filter_any(46)
+        ip = filter_any(46);
+		printIpPool(ip);
 
         // 186.204.34.46
         // 186.46.222.194
