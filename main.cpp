@@ -29,6 +29,25 @@ std::vector<std::string> split(const std::string &str, char d)
     return r;
 }
 
+void reverseLexicSort(std::vector<std::vector<std::string> >& vec)
+{
+	auto reverseComparator = [](const std::vector<std::string>& left, 
+	                            const std::vector<std::string>& right) -> bool 
+	{
+		if (left.size() != 4 || right.size() != 4)
+			return false;	
+		for(unsigned i = 0; i < left.size(); i++)
+		{
+			if (std::stoi(left[i]) == std::stoi(right[i]))
+				continue;
+			return std::stoi(left[i]) > std::stoi(right[i]);
+
+		}
+		return true; 
+	};
+	std::sort(vec.begin(), vec.end(), reverseComparator);
+}
+
 int main(int argc, char const *argv[])
 {
     try
@@ -42,6 +61,7 @@ int main(int argc, char const *argv[])
         }
 
         // TODO reverse lexicographically sort
+		reverseLexicSort(ip_pool);
 
         for(auto ip = ip_pool.cbegin(); ip != ip_pool.cend(); ++ip)
         {
