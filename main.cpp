@@ -120,7 +120,7 @@ int main(int argc, char const *argv[])
 					{
 						if (second == -1)
 							break;
-						if (std::atoi((*(ip_part + 1)).c_str()) == second)
+						if (std::atoi((*ip_part).c_str()) != second)
 						{
 							goodChoice = false;
 							break;
