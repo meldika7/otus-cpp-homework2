@@ -49,6 +49,23 @@ void reverseLexicSort(std::vector<std::vector<std::string> >& vec)
 	std::sort(vec.begin(), vec.end(), reverseComparator);
 }
 
+void printIpPool(std::vector<std::vector<std::string> >& vec)
+{
+	for(auto ip = vec.cbegin(); ip != vec.cend(); ++ip)
+	{
+		for(auto ip_part = ip->cbegin(); ip_part != ip->cend(); ++ip_part)
+		{
+			if (ip_part != ip->cbegin())
+			{
+				std::cout << ".";
+
+			}
+			std::cout << *ip_part;
+		}
+		std::cout << std::endl;
+	}
+}
+
 int main(int argc, char const *argv[])
 {
     try
@@ -86,10 +103,9 @@ int main(int argc, char const *argv[])
         // 1.29.168.152
         // 1.1.234.8
 
-		auto filter = [&ip_pool](int first, int second = -1) -> void //decltype(ip_pool)
+		auto filter = [&ip_pool](int first, int second = -1) -> decltype(ip_pool)
 		{
-			// std::vector<std::vector<std::string> > res;
-			// decltype(ip_pool) res;
+			decltype(ip_pool) res;
 			for(auto ip = ip_pool.cbegin(); ip != ip_pool.cend(); ++ip)
 			{
 				bool goodChoice = true;
@@ -110,26 +126,20 @@ int main(int argc, char const *argv[])
 							break;
 						}
 					}
+					
 				}
 				if (goodChoice)
 				{
-					for(auto ip_part = ip->cbegin(); ip_part != ip->cend(); ++ip_part)
-					{
-						if (ip_part != ip->cbegin())
-						{
-							std::cout << ".";
-						}
-						std::cout << *ip_part;
-					}					
-				
-					std::cout << std::endl;					
-				}                        
-			}
+					res.push_back(*ip);				
+				}
+			}		
+			return res;                        
+	
 		};
 
         // TODO filter by first byte and output
-        // auto ip = 
-		filter(1);
+        auto ip = filter(1);
+		printIpPool(ip);
 
         // 1.231.69.33
         // 1.87.203.225
