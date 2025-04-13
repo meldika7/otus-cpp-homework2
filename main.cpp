@@ -84,20 +84,7 @@ int main(int argc, char const *argv[])
 
         // TODO reverse lexicographically sort
 		reverseLexicSort(ip_pool);
-
-        for(auto ip = ip_pool.cbegin(); ip != ip_pool.cend(); ++ip)
-        {
-            for(auto ip_part = ip->cbegin(); ip_part != ip->cend(); ++ip_part)
-            {
-                if (ip_part != ip->cbegin())
-                {
-                    std::cout << ".";
-
-                }
-                std::cout << *ip_part;
-            }
-            std::cout << std::endl;
-        }
+		printIpPool(ip_pool);
 
         // 222.173.235.246
         // 222.130.177.64
