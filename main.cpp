@@ -5,6 +5,8 @@
 #include <vector>
 #include <algorithm>
 
+#define UNUSED(variable) (void)variable;
+
 // ("",  '.') -> [""]
 // ("11", '.') -> ["11"]
 // ("..", '.') -> ["", "", ""]
@@ -68,6 +70,8 @@ void printIpPool(std::vector<std::vector<std::string> >& vec)
 
 int main(int argc, char const *argv[])
 {
+	UNUSED(argc)
+	UNUSED(argv)
     try
     {
         std::vector<std::vector<std::string> > ip_pool;
