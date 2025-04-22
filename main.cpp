@@ -32,18 +32,18 @@ std::vector<std::string> split(const std::string &str, char d)
     return r;
 }
 
-void reverseLexicSort(std::vector<std::vector<std::string> >& vec)
+void reverseLexicSort(std::vector<std::vector<int> >& vec)
 {
-	auto reverseComparator = [](const std::vector<std::string>& left, 
-	                            const std::vector<std::string>& right) -> bool 
+	auto reverseComparator = [](const std::vector<int>& left, 
+	                            const std::vector<int>& right) -> bool 
 	{
 		if (left.size() != 4 || right.size() != 4)
 			return false;	
 		for(unsigned i = 0; i < left.size(); i++)
 		{
-			if (std::stoi(left[i]) == std::stoi(right[i]))
+			if (left[i] == right[i])
 				continue;
-			return std::stoi(left[i]) > std::stoi(right[i]);
+			return left[i] > right[i];
 
 		}
 		return true; 
@@ -51,7 +51,7 @@ void reverseLexicSort(std::vector<std::vector<std::string> >& vec)
 	std::sort(vec.begin(), vec.end(), reverseComparator);
 }
 
-void printIpPool(std::vector<std::vector<std::string> >& vec)
+void printIpPool(std::vector<std::vector<int> >& vec)
 {
 	for(auto ip = vec.cbegin(); ip != vec.cend(); ++ip)
 	{
@@ -60,7 +60,6 @@ void printIpPool(std::vector<std::vector<std::string> >& vec)
 			if (ip_part != ip->cbegin())
 			{
 				std::cout << ".";
-
 			}
 			std::cout << *ip_part;
 		}
@@ -74,12 +73,12 @@ int main(int argc, char const *argv[])
 	UNUSED(argv)
     try
     {
-        std::vector<std::vector<std::string> > ip_pool;
+        std::vector<std::vector<int> > ip_pool;
 
         for(std::string line; std::getline(std::cin, line);)
         {
             auto v = split(line, '\t');
-            ip_pool.push_back(split(v.at(0), '.'));
+          //  ip_pool.push_back(split(v.at(0), '.'));
         }
 
         // TODO reverse lexicographically sort
@@ -102,7 +101,7 @@ int main(int argc, char const *argv[])
 				bool goodChoice = true;
 				for(auto ip_part = ip->cbegin(); ip_part != ip->cend(); ++ip_part)
 				{
-					if (ip_part == ip->cbegin() && std::atoi((*ip_part).c_str()) != first)
+					if (ip_part == ip->cbegin() && *ip_part != first)
 					{
 						goodChoice = false;
 						break;
@@ -111,7 +110,7 @@ int main(int argc, char const *argv[])
 					{
 						if (second == -1)
 							break;
-						if (std::atoi((*ip_part).c_str()) != second)
+						if (*ip_part != second)
 						{
 							goodChoice = false;
 							break;
@@ -155,7 +154,7 @@ int main(int argc, char const *argv[])
 				bool goodChoice = false;
 				for(auto ip_part = ip->cbegin(); ip_part != ip->cend(); ++ip_part)
 				{
-					if (std::atoi((*ip_part).c_str()) == byteValue)
+					if (*ip_part == byteValue)
 					{
 						goodChoice = true;
 						break;
